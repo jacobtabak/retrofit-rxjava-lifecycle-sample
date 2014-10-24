@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">RxLifecycleHelperSample</string>
+    <string name="download">Download File</string>
+    <string name="downloading">Downloading...</string>
+    <string name="failed">Failed :(  Again?</string>
+    <string name="success">Success! Again?</string>
+
+</resources>
