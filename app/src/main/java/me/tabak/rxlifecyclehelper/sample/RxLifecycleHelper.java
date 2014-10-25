@@ -1,5 +1,6 @@
 package me.tabak.rxlifecyclehelper.sample;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -72,10 +73,12 @@ public final class RxLifecycleHelper {
     }
 
     Fragment state = fragmentManager.findFragmentByTag(cls.getName());
+    Context context = mActivity != null ? mActivity : mFragment.getActivity();
     if (state == null) {
-      state = T.instantiate(mActivity, cls.getName());
+      state = T.instantiate(context, cls.getName());
       fragmentManager.beginTransaction().add(state, cls.getName()).commit();
     }
+
     return (T) state;
   }
 
