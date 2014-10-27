@@ -57,12 +57,24 @@ public final class RxLifecycleHelper {
 
   /**
    * Creates or retrieves a {@link me.tabak.rxlifecyclehelper.sample.RxLifecycleHelper.RetainedState}
-   * object that will persist across activity or fragment re-creation.
+   * object that will persist across activity or fragment re-creation.  The tag will default to the class
+   * name of the retained state.
    * @param cls The class to create or retrieve.
    * @return An instance will be associated with this activity and persisted across re-creation.
    */
-  @SuppressWarnings("unchecked")
   public <T extends RetainedState> T getRetainedState(Class<T> cls) {
+    return getRetainedState(cls, cls.getName());
+  }
+
+  /**
+   * Creates or retrieves a {@link me.tabak.rxlifecyclehelper.sample.RxLifecycleHelper.RetainedState}
+   * object that will persist across activity or fragment re-creation.
+   * @param cls The class to create or retrieve.
+   * @param tag A unique key for this retained state.
+   * @return An instance will be associated with this activity and persisted across re-creation.
+   */
+  @SuppressWarnings("unchecked")
+  public <T extends RetainedState> T getRetainedState(Class<T> cls, String tag) {
     FragmentManager fragmentManager;
     if (mActivity != null) {
       fragmentManager = mActivity.getSupportFragmentManager();
@@ -72,7 +84,7 @@ public final class RxLifecycleHelper {
       throw new IllegalStateException();
     }
 
-    Fragment state = fragmentManager.findFragmentByTag(cls.getName());
+    Fragment state = fragmentManager.findFragmentByTag(tag);
     Context context = mActivity != null ? mActivity : mFragment.getActivity();
     if (state == null) {
       state = T.instantiate(context, cls.getName());
